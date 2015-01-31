@@ -26,7 +26,10 @@ DIR=`mktemp -d 2>/dev/null || mktemp -d -t 'cgilatex'`
 
 [ -f $PATH_TRANSLATED ] || die $STATUS404
 
-$PDFLATEX -halt-on-error -output-directory=$DIR $PATH_TRANSLATED || \
+$PDFLATEX -halt-on-error \
+    -interaction=nonstopmode \
+    -output-directory=$DIR \
+    $PATH_TRANSLATED &> /dev/null || \
     die $STATUS500
 
 printf "Content-Type: application/pdf\n\n"
